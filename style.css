@@ -44,7 +44,6 @@ main{
 }
 
 #cardContainer{
-    border: solid black 2px;
     width: 420px;
     min-height: 100px;
     display: flex;
@@ -58,6 +57,7 @@ main{
     display: none;
     z-index: 5;
     background-color: rgba(255, 0, 0, 0.178);
+    background-color: rgba(76, 241, 76, 0.219);
 }
 
 #timer{
