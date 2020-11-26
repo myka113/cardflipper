@@ -104,13 +104,15 @@ function count(){
   setInterval(subtractASecond, 1000)
 }
 
-
 function subtractASecond(){
   if(time){
     console.log(time);
     time--
     timer.innerHTML=`TIMER: ${time}`
   }
+  else{
+    timer.innerHTML=`OUT OF TIME !!!`
+    timer.style.fontSize='100px'
+    curtain.style.display='block'
+  }
 }
-
-
