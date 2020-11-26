@@ -1,4 +1,3 @@
-
 const cardContainer = document.getElementById('cardContainer')
 const footer = document.getElementById('footer')
 const timer = document.getElementById('timer')
@@ -23,6 +22,8 @@ let timerStarted=false
 let cardsArr=[]
 
 let biggestNum=1
+
+let won=false
 
 function generateCards(inputVal){
   console.log(inputVal);
@@ -68,19 +69,36 @@ function flip(whichCard) {
   }
   else{
     card[whichCard].innerHTML=`${cardsArr[whichCard]}`
-    if(cardPressed===cardsArr[whichCard]){
+    if(cardPressed===cardsArr[whichCard]&&cardPressedNum!==whichCard){
       console.log('true');
       card[cardPressedNum].classList.add("noClick");
       card[whichCard2].classList.add("noClick");
       card[cardPressedNum].onclick=null
       card[whichCard2].onclick=null
     }
-    else{
+    else if(cardPressedNum!==whichCard){
       console.log('false');
       curtain.style.display='block'
       setTimeout(flipDown, 2000)
     }
+    else{
+      flipDown()
+    }
     cardPressed=false
+  }
+  let wincheck=0
+  for(let i=0; i<cardsArr.length; i++){
+    if(card[i].innerHTML!==''){
+      wincheck++
+    }
+  }
+  if(wincheck===cardsArr.length){
+    console.log('YOU WIN');
+    timer.innerHTML=`YOU WIN !!!`
+    timer.style.fontSize='100px'
+    curtain.style.display='block'
+    curtain.style.backgroundColor='rgba(76, 241, 76, 0.219)'
+    won=true
   }
 }
 
@@ -105,12 +123,11 @@ function count(){
 }
 
 function subtractASecond(){
-  if(time){
-    console.log(time);
+  if(time&&!won){
     time--
     timer.innerHTML=`TIMER: ${time}`
   }
-  else{
+  else if(!won){
     timer.innerHTML=`OUT OF TIME !!!`
     timer.style.fontSize='100px'
     curtain.style.display='block'
