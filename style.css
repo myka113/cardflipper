@@ -52,7 +52,7 @@ main{
 
 #curtain{
     position: absolute;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: none;
     z-index: 5;
