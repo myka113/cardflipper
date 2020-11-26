@@ -1,5 +1,10 @@
 const space = document.getElementsByClassName('space')
 
+const yourTurn = document.getElementById('yourTurn')
+const lossWord = document.getElementById('loss')
+const tieWord = document.getElementById('tie')
+const curtain = document.getElementById('curtain')
+
 space[0].addEventListener('click', doTheThing)
 space[1].addEventListener('click', doTheThing)
 space[2].addEventListener('click', doTheThing)
@@ -186,37 +191,25 @@ function doTheThing(index){
       }
     }
   }
-  if(win()){
-    alert("YOU WIN (reload page)");
-  }
+
   if(loss()){
-    alert("YOU LOSE (reload page)");
+    yourTurn.style.display="none"
+    lossWord.style.display="block"
+    curtain.style.display="block"
+    setTimeout(reload, 2000);
   }
   if(tie()){
-    alert("TIE (reload page)");
+    yourTurn.style.display="none"
+    tieWord.style.display="block"
+    curtain.style.display="block"
+    setTimeout(reload, 2000);
   }
 }
 
-function win(){
-  let counter
-  let trigger=false
-  for(let i=0; i<8; i++){
-    counter=0
-    for(let j=0; j<2; j++){
-      if(array[lines[i][j]]==='o'){
-        if(array[lines[i][j]]===array[lines[i][j+1]]){
-          counter++
-        }
-      }
-    }
-    if(counter===2&&!trigger){
-      trigger=true
-    }
-  }
-  if(trigger){
-    return true
-  }
+function reload(){
+  location.reload()
 }
+
 
 
 function loss(){
@@ -236,7 +229,7 @@ function loss(){
     }
   }
   if(trigger){
-    return true
+    return 1
   }
 }
 
@@ -248,11 +241,8 @@ function tie(){
     }
   }
   if(counter>=8){
-    return true
+    return 1
   }
 }
 
 
-function death(){
-
-}
