@@ -1,248 +1,80 @@
-const space = document.getElementsByClassName('space')
 
-const yourTurn = document.getElementById('yourTurn')
-const lossWord = document.getElementById('loss')
-const tieWord = document.getElementById('tie')
-const curtain = document.getElementById('curtain')
+const cardContainer = document.getElementById('cardContainer')
+const footer = document.getElementById('footer')
 
-space[0].addEventListener('click', doTheThing)
-space[1].addEventListener('click', doTheThing)
-space[2].addEventListener('click', doTheThing)
+const card = document.getElementsByClassName('card')
 
-space[3].addEventListener('click', doTheThing)
-space[4].addEventListener('click', doTheThing)
-space[5].addEventListener('click', doTheThing)
-
-space[6].addEventListener('click', doTheThing)
-space[7].addEventListener('click', doTheThing)
-space[8].addEventListener('click', doTheThing)
-
-let array=[0,0,0, 0,0,0, 0,0,0]
-
-let lines=[[0,1,2], [3,4,5], [6,7,8], 
-[0,3,6], [1,4,7], [2,5,8], 
-[0,4,8], [2,4,6]]
-
-let turn=0
-
-function doTheThing(index){
-  if(!array[index]){
-    array[index]='o'
-    space[index].innerHTML='o'
-
-    let ao
-    let ax
-    let done=false
-
-
-    if(!turn&&index===4){
-      done=true
-      let whichOne=Math.floor(Math.random() * 4)+1
-      console.log(whichOne);
-      if(whichOne===1){whichOne=0}
-      if(whichOne===3){whichOne=6}
-      if(whichOne===4){whichOne=8}
-      array[whichOne]='x'
-      space[whichOne].innerHTML='x'
-    }
-    if(turn===1&&array[4]==='x'&&((array[0]==='o'&&array[8]==='o')||(array[2]==='o'&&array[6]==='o'))){
-      done=true
-      let whichOne=Math.floor(Math.random() * 4)+1.1
-      console.log(whichOne);
-      if(whichOne===1.1){whichOne=1}
-      if(whichOne===2.1){whichOne=3}
-      if(whichOne===3.1){whichOne=5}
-      if(whichOne===4.1){whichOne=7}
-      array[whichOne]='x'
-      space[whichOne].innerHTML='x'
-    }
-    turn++
-
-    if(!done){
-      for(let i=0; i<8; i++){
-        let a=[]
-        for(let j=0; j<=2; j++){
-          a.push(array[lines[i][j]])
-        }
-        ao=0
-        ax=0
-        for(let j=0; j<=2; j++){
-          if(a[j]==='o'){
-            ao++
-          }
-          if(a[j]==='x'){
-            ax++
-          }
-        }
-        
-        if(ao===0&&ax===2){
-          for(let j=0; j<=2; j++){
-            if(!a[j]){
-              a[j]='x'
-              array[lines[i][j]]='x'
-              space[lines[i][j]].innerHTML='x'
-            }
-          }
-          done=true
-        }
-        for(let j=0; j<=2; j++){
-          array[lines[i][j]]=a[j]
-        }
-        if(ao===0&&ax===2){
-          i=9
-        }
-      }
-    }
-    
-
-
-
-    if(!done){
-      for(let i=0; i<8; i++){
-        let a=[]
-        for(let j=0; j<=2; j++){
-          a.push(array[lines[i][j]])
-        }
-        ao=0
-        ax=0
-        for(let j=0; j<=2; j++){
-          if(a[j]==='o'){
-            ao++
-          }
-          if(a[j]==='x'){
-            ax++
-          }
-        }
-        
-        if(ao===2&&ax===0){
-          for(let j=0; j<=2; j++){
-            if(!a[j]){
-              a[j]='x'
-              array[lines[i][j]]='x'
-              space[lines[i][j]].innerHTML='x'
-            }
-          }
-          done=true
-        }
-        for(let j=0; j<=2; j++){
-          array[lines[i][j]]=a[j]
-        }
-        if(ao===2&&ax===0){
-          i=9
-        }
-      }
-      console.log(done);
-    }
-
-
-    if(!done){
-      if(array[4]!==0){
-        let allChoices=[]
-        for(let i=0; i<8; i++){
-          for(let j=0; j<=2; j++){
-            if(lines[i].includes(index, j)){
-              for(let y=0; y<=2; y++){
-                allChoices.push(lines[i][y])
-              }
-            }
-          }
-        }
-        console.log('allChoices');
-  
-        console.log(allChoices);
-        console.log('choices');
-  
-        
-        var choices = allChoices.reduce(function(a,b){
-          if (a.indexOf(b) < 0 ) a.push(b);
-          return a;
-        },[]);
-        
-  
-        for(let i=0; i<choices.length-1; i++){
-          if(choices[i]===index*1){
-            choices.splice(i, 1);
-          }
-        }
-
-        let filteredC=[]
-
-        for(let i=0; i<choices.length; i++){
-          if(array[choices[i]]===0){
-            filteredC.push(choices[i])
-          }
-        }
-        
-        console.log(filteredC);
-  
-        let whichOne=Math.floor(Math.random() * filteredC.length)
-  
-        array[filteredC[whichOne]]='x'
-        space[filteredC[whichOne]].innerHTML='x'
-        console.log('----------');
-        console.log(filteredC[whichOne]);
-        console.log('----------');
-
-
-      }
-      else{
-        array[4]='x'
-        space[4].innerHTML='x'
-      }
-    }
+function getInputValue(){
+  var inputVal = document.getElementById("myInput").value;
+  if(inputVal+1!=inputVal+2-1){
+    alert(`${inputVal} is not a number`);
   }
-
-  if(loss()){
-    yourTurn.style.display="none"
-    lossWord.style.display="block"
-    curtain.style.display="block"
-    setTimeout(reload, 2000);
-  }
-  if(tie()){
-    yourTurn.style.display="none"
-    tieWord.style.display="block"
-    curtain.style.display="block"
-    setTimeout(reload, 2000);
+  else{
+    alert(`${inputVal} card pairs generated`);
+    footer.style.display='none'
+    generateCards(inputVal*1)
   }
 }
 
-function reload(){
-  location.reload()
-}
+let cardsArr=[]
 
+let biggestNum=1
 
+function generateCards(inputVal){
+  console.log(inputVal);
 
-function loss(){
-  let counter
-  let trigger=false
-  for(let i=0; i<8; i++){
-    counter=0
-    for(let j=0; j<2; j++){
-      if(array[lines[i][j]]==='x'){
-        if(array[lines[i][j]]===array[lines[i][j+1]]){
-          counter++
-        }
-      }
-    }
-    if(counter===2&&!trigger){
-      trigger=true
-    }
+  for(let i=0; i<inputVal; i++){
+    cardsArr.push(biggestNum)
+    cardsArr.push(biggestNum)
+    biggestNum++
   }
-  if(trigger){
-    return 1
+  console.log(cardsArr);
+  shuffleArray(cardsArr)
+  console.log(cardsArr);
+
+
+  for(let i=0; i<inputVal*2; i++){
+    cardContainer.innerHTML+=`<div class="card" onclick="flip(${i});"></div>`
   }
 }
 
-function tie(){
-  let counter=0
-  for(let i=0; i<8; i++){
-    if(array[i]){
-      counter++
-    }
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
   }
-  if(counter>=8){
-    return 1
+  return array
+}
+
+let cardPressed=false
+let cardPressedNum=false
+let whichCard2=false
+
+function flip(whichCard) {
+  whichCard2=whichCard
+  if(!cardPressed){
+    cardPressed=cardsArr[whichCard]
+    cardPressedNum=whichCard
+    console.log(cardPressedNum);
+    card[whichCard].innerHTML=`${cardsArr[whichCard]}`
+  }
+  else{
+    card[whichCard].innerHTML=`${cardsArr[whichCard]}`
+    if(cardPressed===cardsArr[whichCard]){
+      console.log('true');
+    }
+    else{
+      console.log('false');
+      curtain.style.display='block'
+      setTimeout(flipDown, 3000)
+    }
+    cardPressed=false
   }
 }
 
-
+function flipDown(){
+  curtain.style.display='none'
+  card[cardPressedNum].innerHTML=''
+  card[whichCard2].innerHTML=''
+  cardPressedNum=false
+}

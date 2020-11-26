@@ -1,39 +1,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ticktacktoe</title>
+    <title>cardflipper</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 
 <body>
-    <div id="table">
-        <div class="space" onclick="doTheThing(0)"></div>
-        <div class="space" onclick="doTheThing(1)"></div>
-        <div class="space" onclick="doTheThing(2)"></div>
-
-        <div class="space" onclick="doTheThing(3)"></div>
-        <div class="space" onclick="doTheThing(4)"></div>
-        <div class="space" onclick="doTheThing(5)"></div>
-
-        <div class="space" onclick="doTheThing(6)"></div>
-        <div class="space" onclick="doTheThing(7)"></div>
-        <div class="space" onclick="doTheThing(8)"></div>
-    </div>
-
-    <div id="centered">
-        <div id="yourTurn">
-            YOUR TURN
+    <footer id="footer">
+        <input type="text" placeholder="number" id="myInput">
+        <button type="button" onclick="getInputValue();">add</button>
+    </footer>
+    <main>
+        <div id="cardContainer">
+            
         </div>
-        <div id="loss">
-            LOSS
-        </div>
-        <div id="tie">
-            TIE
-        </div>
-    </div>
-
+    </main>
     <div id="curtain"></div>
-    
 </body>
 </html>
